@@ -1,0 +1,44 @@
+---
+description: Experiência do usuário (UX) e Engenharia de Design — Estilo Editorial Tech, motion, acessibilidade e feedback
+alwaysApply: true
+---
+
+# Experiência do Usuário & Design Engineering
+
+Toda alteração visível ao usuário deve seguir a abordagem **"Editorial Tech"**: um equilíbrio entre a credibilidade do jornalismo investigativo moderno (estilo Stripe Press / Bloomberg) e a fluidez de um produto digital de alto nível. A interface deve ser **calma, clara, polida e totalmente auditável** — nunca parecendo um CRUD genérico ou poluído.
+
+## Direcionadores de Design & Skills de Referência
+
+- **Motion & Polish (Emil Kowalski):** Microinterações fluidas (ex: Quiz de Votações), transições físicas suaves entre telas, animações em *spring* para tooltips/glossários e notificações dinâmicas via Sonner.
+- **Tipografia, Layout & Acessibilidade (Jakub Krehel):** Hierarquia tipográfica precisa para leitura densa de fontes/leis, tom neutro e direto no texto (*better-writing*), layout limpo (*better-layout*) e conformidade com WCAG (*better-accessibility*).
+- **Estética Editorial Tech (MengTo):** Visual elegante e jornalístico aplicado a componentes estruturados (ex: Linha do Tempo, Dossiês Auditáveis e Central de Provas).
+
+---
+
+## Requisitos Obrigatórios (Must-haves)
+
+1. **Overlays e Transições Suaves** — Modais, gavetas e tooltips (ex: Glossário de Juridiquês) devem usar animações físicas/spring de entrada e saída. Nunca monte ou desmonte componentes com cortes secos; mantenha o elemento montado até o fim da transição.
+2. **Feedback & Notificações Instantâneas** — Notificações e banners de feedback devem ser elegantes e contextuais (usando Sonner / estilos de banner da aplicação). Erros nunca ficam jogados como texto solto em tela branca.
+3. **Escritas vs. Atualizações em Segundo Plano** — O estado `isPending` de botões e formulários termina assim que a escrita na API for concluída. Nunca trave a interface dando `await` em requisições de fundo no `onSuccess`. Atualize o cache (upsert) localmente quando possível.
+4. **Carregamento Editorial (Loading)** — 
+   - Primeiro carregamento: use *Skeletons* estruturados para simular o layout editorial.
+   - Atualizações contextuais (ex: filtros, troca de linha do tempo): reduza levemente a opacidade dos dados atuais enquanto busca novos — **nunca** pisque telas vazias ou valores zerados.
+5. **Acessibilidade Universal & Leitura (WCAG)** — Alto contraste, suporte completo a navegação por teclado, leitores de tela e tipografia escaneável para textos longos, documentos e leis.
+6. **Formulários e Controles Nativos** — Inputs, seletores de data e menus interativos usam os tokens visuais do projeto e classes compartilhadas. Nenhum controle deve exibir a estilização crua/padrão do sistema operacional.
+
+---
+
+## Dê preferência a
+
+- Tipografia impecável, espaçamentos consistentes e hierarquia clara de leitura.
+- Animações intencionais que guiam a atenção do usuário (sem poluição visual).
+- Componentes reutilizáveis para dossiês, banners, modais e cards de provas/fontes.
+- Desabilitar e exibir indicador de carregamento apenas no botão/controle que disparou a ação.
+
+## Evite
+
+- Diálogos ou alertas nativos do navegador (`window.confirm`, `alert`).
+- Fechar modais, gavetas ou tooltips sem animação de saída.
+- Deixar ações travadas em "carregando..." enquanto buscas secundárias rodam em segundo plano.
+- Exibir avisos de "nenhum dado encontrado" enquanto a aplicação ainda está em estado de carregamento (`isLoading`).
+- Criar novos padrões visuais ou de notificação fora do sistema de design unificado.

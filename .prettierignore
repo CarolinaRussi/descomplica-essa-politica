@@ -1,0 +1,8 @@
+.agents
+*.md
+*.mdc
+pnpm-lock.yaml
+dist
+dev-dist
+coverage
+apps/web/src/routeTree.gen.ts

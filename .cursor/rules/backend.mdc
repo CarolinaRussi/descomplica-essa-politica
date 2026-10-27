@@ -1,0 +1,25 @@
+---
+description: Camadas da API em Fastify, convenções de TypeORM Active Record e Workers do BullMQ
+globs: apps/api/**/*
+alwaysApply: false
+---
+
+# Backend (`apps/api`)
+
+- Camadas: `routes → controllers → services → repositories → db` (e `workers` para rotinas em segundo plano).
+- Sem pastas `modules/` até que um segundo produto/escopo exija essa divisão.
+- Regras de negócio ficam nos **services**, nunca nas rotas, controllers ou workers.
+- Persistência: Entidades no padrão **Active Record (TypeORM)**; repositórios orquestram consultas, filtros e salvamentos.
+- Validação na borda HTTP: Use **Zod** para validar payloads de entrada, parâmetros de rota e query strings.
+- Processamento em segundo plano: Ingestão de dados abertos (Câmara, Senado, DOU) e envio de e-mails/newsletter devem usar **BullMQ + Redis**.
+- Nomenclatura: Domínio do negócio em português (`camelCase`) + Sufixo da camada em inglês.
+  - Ex: `repositories/parlamentarRepository.ts`, `controllers/proposicaoController.ts`, `services/votacaoService.ts`, `workers/camaraWorker.ts`.
+- Alterações de schema no banco de dados (PostgreSQL) devem ser feitas estritamente via migrações (migrations).
+- Em dev a API roda com `tsx` (esbuild), que **não emite metadata de decorators**: toda `@Column` precisa declarar o `type` explicitamente (ex: `@Column({ type: 'varchar', length: 255 })`).
+- ESM com `module: nodenext`: imports relativos terminam em `.js` (ex: `import { env } from '../config/env.js'`).
+
+```ts
+// ✅ Serviço chamando o repositório da entidade do domínio
+await this.parlamentarRepository.buscarComHistoricoVotacoes(parlamentarId);
+
+// ❌ Rota/Controller com SQL direto, chamada crua de API do governo ou regra de negócio misturada

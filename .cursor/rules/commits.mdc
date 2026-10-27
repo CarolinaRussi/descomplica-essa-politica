@@ -1,0 +1,24 @@
+---
+description: Padrões de mensagens de Conventional Commit em português
+alwaysApply: true
+---
+
+# Commits
+
+Conventional Commits com descrições escritas em português do Brasil (PT-BR).
+
+Tipos: `feat`, `fix`, `docs`, `chore`, `refactor`.
+
+Escopos padrão: `frontend` ou `backend`.
+
+Use outros escopos apenas se a alteração não se enquadrar nesses dois (ex: `repo`, `ci`, ou omita o escopo para alterações puras em `docs:`).
+
+```text
+feat(frontend): adiciona cards de resumo do mês
+feat(backend): cria endpoint de convite para o espaço
+docs: atualiza seção de privacidade do produto
+chore(ci): adiciona job de verificação de tipos
+```
+
+- Prefira uma única alteração lógica por commit quando o usuário solicitar o commit.
+- Não faça commit a menos que o usuário peça explicitamente.

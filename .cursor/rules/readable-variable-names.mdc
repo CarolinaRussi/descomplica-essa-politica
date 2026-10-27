@@ -1,0 +1,38 @@
+---
+description: Nomenclatura legível de variáveis e parâmetros (evitar abreviações e letras soltas)
+alwaysApply: true
+---
+
+# Nomenclatura de Variáveis
+
+Os nomes devem ser **claros e legíveis** ao ler o código rapidamente. Dê preferência aos termos do domínio político/legislativo (`parlamentar`, `proposicao`, `votacao`, `fonte`, `presidente`) em vez de abreviações opacas.
+
+## O que evitar
+
+- Variáveis ou parâmetros de **uma letra** (`p`, `v`, `f`, `l`, `e`), salvo as exceções abaixo.
+- Abreviações crípticas quando o nome completo cabe sem prejuízo (`prop` → `proposicao`, `parl` → `parlamentar`, `vot` → `votacao`, `font` → `fonte`).
+- Reutilizar a mesma letra ou abreviação curta para conceitos diferentes no mesmo arquivo.
+
+## O que preferir
+
+```typescript
+// ❌
+const p = await buscarProposicao(id);
+const v = await sincronizarVotacoes(p);
+proposicoes.map((p) => p.id);
+
+// ✅
+const proposicao = await buscarProposicao(id);
+const resultadoVotacao = await sincronizarVotacoes(proposicao);
+proposicoes.map((proposicao) => proposicao.id);
+```
+
+Em callbacks de .map, .filter, .reduce e consultas do TypeORM/query builders, use o nome descritivo da entidade (ex: parlamentarRow, proposicaoRow, fonteItem, voto).
+
+## Exceções aceitáveis
+- Índice de loop simples: i, j (ex.: for (let i = 0; ...)).
+- Coordenadas ou matemática curta e local: x, y, n (apenas se o contexto for óbvio e o bloco for muito curto).
+- Blocos try/catch: use obrigatoriamente error ou erro (evite e).
+
+## Ao escrever código novo
+- Aplique esta regra no código que criar ou alterar. Não faça renomeações em massa em arquivos fora do escopo da tarefa atual a menos que seja explicitamente solicitado.

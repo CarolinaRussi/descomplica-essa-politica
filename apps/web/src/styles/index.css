@@ -1,0 +1,101 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/newsreader';
+
+/*
+  Tema "Tinta e lacre": papel creme, tinta quente, lacre terracota chapado
+  e índigo de arquivo em degradê. O degradê marca faixas, números e a edição
+  do dia. Lacre marca o fato e a ação.
+  Voto a favor, contra ou abstenção não usa essas cores: ícone e texto bastam.
+*/
+:root {
+  --background: oklch(0.965 0.012 85);
+  --foreground: oklch(0.22 0.02 55);
+  --card: oklch(0.985 0.008 85);
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: oklch(0.22 0.02 55);
+  --primary-foreground: oklch(0.97 0.01 85);
+  --secondary: oklch(0.93 0.014 80);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.93 0.014 80);
+  --muted-foreground: oklch(0.46 0.02 60);
+  --lacre: oklch(0.55 0.14 42);
+  --lacre-foreground: oklch(0.98 0.01 85);
+  --indigo-deep: oklch(0.28 0.07 262);
+  --indigo-mid: oklch(0.42 0.1 252);
+  --indigo-mist: oklch(0.5 0.11 218);
+  --accent: var(--lacre);
+  --accent-foreground: var(--lacre-foreground);
+  --destructive: oklch(0.5 0.17 30);
+  --border: oklch(0.88 0.016 80);
+  --input: oklch(0.88 0.016 80);
+  --ring: var(--indigo-mid);
+  --radius: 0.5rem;
+  --gradient-indigo: linear-gradient(
+    108deg,
+    var(--indigo-deep) 0%,
+    var(--indigo-mid) 52%,
+    var(--indigo-mist) 100%
+  );
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Newsreader Variable', ui-serif, Georgia, serif;
+  --font-heading: var(--font-serif);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-lacre: var(--lacre);
+  --color-lacre-foreground: var(--lacre-foreground);
+  --color-indigo-deep: var(--indigo-deep);
+  --color-indigo-mid: var(--indigo-mid);
+  --color-indigo-mist: var(--indigo-mist);
+  --color-destructive: var(--destructive);
+  --background-image-indigo-fade: var(--gradient-indigo);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply font-serif tracking-tight text-balance;
+  }
+
+  p {
+    @apply text-pretty;
+  }
+}

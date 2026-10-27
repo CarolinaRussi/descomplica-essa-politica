@@ -1,0 +1,29 @@
+---
+description: Estrutura por feature, TanStack Router/Query, shadcn e convenções do PWA em React
+globs: apps/web/**/*
+alwaysApply: false
+---
+
+# Frontend (`apps/web`)
+
+- Stack: React 19 + Vite + Tailwind v4 + TanStack Router (rotas em arquivo) + TanStack Query v5 + Zustand + shadcn/ui (Radix) + `motion` + Sonner + `vite-plugin-pwa`.
+- Estrutura:
+  - `src/routes/` — só definição de rota (`createFileRoute`), loader e composição. A UI de verdade vive na feature.
+  - `src/features/<feature>/` — componentes, hooks e queries da feature (`educacao`, `presidentes`, `quiz`, `glossario`, `fontes`).
+  - `src/shared/ui/` — primitivos shadcn (adicione com `npx shadcn add <componente>` dentro de `apps/web`). Ajustes visuais vão nos tokens, não em cópias do componente.
+  - `src/shared/lib/` — cliente HTTP (`api`), `queryClient`, utilitários genéricos.
+  - `src/styles/index.css` — tokens de design (`:root` + `@theme inline`). Nunca use cores hex soltas nos componentes.
+- `src/routeTree.gen.ts` é gerado pelo plugin do router: não edite à mão.
+- Imports internos com o alias `@/` (ex: `@/shared/ui/button`).
+
+## Dados (TanStack Query)
+
+- Toda chamada à API passa por `api()` de `@/shared/lib/api`; nada de `fetch` solto em componentes.
+- Query keys começam pelo nome da feature: `['quiz', 'proposicoes']`, `['presidentes', presidenteId]`.
+- Defina `queryOptions` na feature e reutilize no loader da rota (`context.queryClient.ensureQueryData`) e no componente (`useSuspenseQuery`/`useQuery`).
+- Mutations: atualize o cache com `setQueryData` no `onSuccess`; `invalidateQueries` sem `await`.
+- Estado de servidor fica no Query; Zustand só para estado local de UI que atravessa componentes (ex: respostas do quiz em andamento).
+
+## Neutralidade visual
+
+- Não use vermelho, azul, verde ou amarelo como cor de destaque de partido, voto ou posição política. Votos "A favor"/"Contra" usam a mesma paleta neutra, diferenciados por ícone e texto.
